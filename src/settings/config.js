@@ -3,8 +3,8 @@ const config = {
   DEFAULT_PREFIX: "!",
   DEVELOPER: [""],
   OWNER: "",
-  INVITE: "",
-  SUPPORT: ""
+  INVITE: "https://discord.com/oauth2/authorize?client_id=1225837700293070948",
+  SUPPORT: "https://discord.gg/TZ5aREV7N8"
 }
 
 const color = {

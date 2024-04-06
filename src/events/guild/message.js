@@ -1,4 +1,4 @@
-const const { Events, Collection } = require("discord.js")
+const { Events, Collection } = require("discord.js")
 
 module.exports = {
   name: Events.MessageCreate,

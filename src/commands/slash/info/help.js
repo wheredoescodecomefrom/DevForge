@@ -56,9 +56,9 @@ module.exports = {
       })
       .setImage(image)
       .setColor(client.color.normal)
-      .setDescription(`> hi ${interaction.member}, I'm ${client.user}, I'm a public bot,\n> equipped with several commands, you can see them using the menu below.`)
+      .setDescription(`> Hello ${interaction.member}! I am DevForge, a discord to roblox management bot for your ranking and verification needs! Use the menu below to learn more about my commands`)
       .setTimestamp()
-      .setFooter({ text: `request from: ${interaction.user.username}` })
+      .setFooter({ text: `DevForge Ranking | Version: 1.0.0-beta` })
 
 
     await interaction.editReply({ embeds: [embed], components: [row2, row] }).then(async (msg) => {
