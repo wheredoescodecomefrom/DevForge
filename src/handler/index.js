@@ -17,7 +17,7 @@ module.exports = (client) => {
 
       for(const file of commands) {
         const command = await require(`../commands/slash/${dir}/${file}`)
-        slash.push(command.data.toJSON())
+        slash.push(command.data)
         client.slashCommands.set(command.data.name, command)
       }
     })

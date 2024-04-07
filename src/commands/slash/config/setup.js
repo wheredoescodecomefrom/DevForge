@@ -15,46 +15,47 @@ module.exports = {
   developer: false,
   data: new SlashCommandBuilder()
     .setName('setup')
-    .setDescription('Setup the bot for your server')
-    .addStringOption(o =>
-      o.setName('id')
-       .setDescription('Your group ID')
-       .setRequired(true))
-    .addStringOption(o =>
-      o.setName('cookie')
-       .setDescription('The cookie to use for your bot (required for ranking)')
-       .setRequired(false)),
-  run: async (client, interaction) => {
-    const gid = interaction.options.getString('id');
-    const token = interaction.option.getString('cookie')
+    .setDescription('Setup the bot for your server'),
+  run: async (client,interaction) => {
     const s = await Schema.findOne({ id: interaction.guild.id });
     
-    await interaction.deferReply({ ephemerial: true })
+    await interaction.deferReply({ ephemiral: true });
 
-    const confirmBtn = new ButtonBuilder()
-      .setCustomId('confirm-settings-btn')
-      .setLabel('Confirm')
-      .setStyle(ButtonStyle.Success)
-      .setEmoji('✅');
+    if (!s) {
+      const newSer = new Schema({ id: interaction.guild.id })
+      newSer.save();
+    }
 
-    const cancelBtn = new ButtonBuilder()
-      .setCustomId('cancel-settings-btn')
-      .setLabel('Cancel')
-      .setStyle(ButtonStyle.Danger)
-      .setEmoji('❌')
+    const groupIdBtn = new ButtonBuilder()
+      .setCustomId('gid-btn')
+      .setLabel('Group ID')
+
+    const cookieBtn = new ButtonBuilder()
+      .setCustomId('cookie-btn')
+      .setLabel('Cookie')
+
+    const rankingPermsId = new ButtonBuilder()
+      .setCustomId('rank-btn')
+      .setLabel('Ranking Perms')
+
+    const logChannrl = new ButtonBuilder()
+      .setCustomId('log-chann-btn')
+      .setLabel('Logging Channel')
 
     const row = new ActionRowBuilder()
-      .addComponents(confirmBtn,cancelBtn)
+      .addComponents(groupIdBtn,cookieBtn,rankingPermsId,logChannrl)
 
     const e = new EmbedBuilder()
-      .setTitle('Setup')
-      .setDescription(`Please confirm the following info`)
+      .setTitle('DevForge Config')
+      .setDescription(`Thank you for having DevForge in ${interaction.guild}!\n\n To edit your configuration, press the corosponding button below!`)
       .addFields(
-        {name:'Group ID',value:gid},
-        {name:`Cookie`,value:`||${token}||`}
+        {name:'Group ID',value:`${s.groupid || 'No groups linked'}`},
+        {name:'Cookie',value:`${s.cookieSet}`},
+        {name:'Ranking Perms ID',value:`${s.rankPermsRole}`},
+        {name:'Log Channel ID',value: `${s.logChann}`}
       )
-      .setColor(client.color.normal)
+    .setColor(client.color)
 
-    interaction.reply({ embeds: [e], components: [row], ephemerial: true,})
+    interaction.reply({ embeds: [e], components: [row], ephemiral: true })
   }
 }

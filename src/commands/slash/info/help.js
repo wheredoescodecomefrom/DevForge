@@ -13,7 +13,8 @@ module.exports = {
   developer: false,
   data: new SlashCommandBuilder()
     .setName("help")
-    .setDescription("here are some of the available bot commands!"),
+    .setDescription("here are some of the available bot commands!")
+    .toJSON(),
   run: async (client, interaction) => {
 
     await interaction.deferReply({ ephemeral: false })
